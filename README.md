@@ -1,40 +1,37 @@
-# Concurrent Programming Examples in C++
+# Multithreading Concurrency and IPC in C++
 
-This repository contains several C++ examples that illustrate different aspects of concurrent programming. The examples cover thread synchronization, deadlock prevention and detection, and inter-process communication using named pipes (FIFOs). Each example builds upon the previous one to demonstrate the evolution from basic (and unsafe) concurrency to robust, deadlock-aware designs.
+## Overview
+This project demonstrates various techniques in multithreading, concurrency, and inter-process communication (IPC) using C++. It is divided into several parts:
 
-## Contents
+- **Phase 1 & Phase 2:** Illustrate basic bank operations (deposit and withdraw) with and without proper mutex protection.
+- **Phase 3 & Phase 4:** Implement account transfers with different strategies to handle deadlocks. Phase 3 uses deadlock detection, while Phase 4 employs resource ordering and timeout-based locking for deadlock prevention and recovery.
+- **Producer-Consumer Example:** Uses POSIX named pipes (FIFOs) to implement a simple producer-consumer system. The producer generates a random number, and the consumer computes and displays a Fibonacci sequence based on that number.
 
-- **phase1.cpp**  
-  A basic implementation of deposit and withdraw functions without any synchronization. This file demonstrates potential data races when multiple threads update a shared global balance.
+## Dependencies
+- **C++ Compiler:** A C++11 (or later) compliant compiler (e.g., `g++`).
+- **POSIX Threads (pthreads):** Required for multithreading support.
+- **POSIX FIFO Support:** Necessary for the producer-consumer example (most Unix-like systems provide this by default).
 
-- **phase2.cpp**  
-  An improved version of the banking example that uses a mutex to protect the shared bank balance during deposit and withdrawal operations, ensuring thread safety.
+## Installation
+1. **Install g++ (if not already installed):**
+   - **Ubuntu/Debian:**
+     ```bash
+     sudo apt update
+     sudo apt install g++
+     ```
+   - **Fedora:**
+     ```bash
+     sudo dnf install gcc-c++
+     ```
+   - **macOS (with Homebrew):**
+     ```bash
+     brew install gcc
+     ```
 
-- **phase3.cpp**  
-  A bank transfer example that implements a deadlock detection mechanism. The program uses resource allocation tracking to detect circular wait conditions between two accounts and recovers by releasing locks when a deadlock is detected.
+2. **Ensure pthread library is available:**  
+   This library is typically included on Unix-like systems.
 
-- **phase4.cpp**  
-  An advanced bank transfer example that incorporates both deadlock prevention and recovery strategies. It demonstrates:
-  - **Resource Ordering:** Locks are acquired in a consistent order (based on account IDs) to prevent deadlocks.
-  - **Timeout Mechanisms:** Each lock attempt has a timeout; if the lock cannot be acquired within a specified time, the thread releases any already-held locks to recover from potential deadlocks.
-
-- **producer.cpp** and **consumer.cpp**  
-  A producer-consumer example using named pipes (FIFOs) for inter-process communication:
-  - **producer.cpp:** Generates a random number and sends it through a FIFO.
-  - **consumer.cpp:** Receives the number, prints a Fibonacci sequence with that many terms, and sends a signal back to the producer.
-
-## Getting Started
-
-### Prerequisites
-
-- A C++ compiler that supports C++11 (or later), such as `g++`.
-- A POSIX-compliant operating system (Linux or macOS) for pthread and FIFO functionality.
-- Basic familiarity with compiling and running programs from the command line.
-
-### Compilation
-
-Use the following commands from the repository root directory to compile each example:
-
-- **phase1.cpp**
-  ```bash
-  g++ -pthread -o phase1 phase1.cpp
+3. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/your-repository.git
+   cd your-repository
